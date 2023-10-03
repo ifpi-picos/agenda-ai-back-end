@@ -9,13 +9,17 @@
       {
         "url": "http://localhost:3000",
         "description": "Servidor local"
+      },
+      {
+        "url": "https://agenda-ai-back-end-production.up.railway.app/",
+        "description": "Servidor online"
       }
     ],
     "paths": {
       "/auth/signup": {
         "post": {
           "summary": "Cadastrar um novo usuário",
-          "description": "Cadastra um novo usuário com email, senha e nome de usuário.",
+          "description": "Cadastra um novo usuário com email, senha, tipo e nome de usuário.",
           "requestBody": {
             "required": true,
             "content": {
@@ -29,21 +33,24 @@
                     "password": {
                       "type": "string"
                     },
-                    "displayName": {
+                    "nome": {
+                      "type": "string"
+                    },
+                    "tipo": {
                       "type": "string"
                     }
                   },
-                  "required": ["email", "password", "displayName"]
+                  "required": ["email", "password", "nome", "tipo"]
                 }
               }
             }
           },
           "responses": {
-            "200": {
+            "201": {
               "description": "Usuário cadastrado com sucesso."
             },
             "400": {
-              "description": "Parâmetros inválidos ou faltantes."
+              "description": "Campos inválidos."
             },
             "500": {
               "description": "Erro interno do servidor."
