@@ -3,11 +3,18 @@ const app = express()
 require("dotenv").config();
 const swaggerUi = require("swagger-ui-express")
 const swaggerDocs = require("./swagger.json")
+const cors = require('cors')
 
 const PORT = process.env.PORT || 3000
 
 const lanchoneteRoutes = require('./routes/lanchonetes');
 const authRoutes = require('./routes/auth')
+
+const corsOptions = {
+    origin: process.env.LOCAL_CLIENTE_URL
+  };
+  
+  app.use(cors(corsOptions));
 
 app.use(express.json())
 
