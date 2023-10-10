@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize')
-const sequelize = require('../config/db')
+const sequelize = require('../config/db');
+const EnderecoModel = require('./endereco');
 
 
 const LanchoneteModel = sequelize.define('Lanchonete', {
@@ -30,6 +31,8 @@ const LanchoneteModel = sequelize.define('Lanchonete', {
 }, {
     tableName: 'lanchonetes'
 })
+
+LanchoneteModel.belongsTo(EnderecoModel, { foreignKey: 'idEndereco', as: 'endereco' })
 
 async function verificarECriarTabela() {
     try {

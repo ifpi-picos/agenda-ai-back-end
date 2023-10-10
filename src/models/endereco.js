@@ -62,7 +62,7 @@ async function verificarECriarTabela() {
     }
 }
 
-verificarECriarTabela();
+//verificarECriarTabela();
 
 
 module.exports = EnderecoModel

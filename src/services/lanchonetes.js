@@ -1,22 +1,57 @@
+const EnderecoModel = require("../models/endereco");
+const sequelize = require('../config/db')
+
 class LanchoneteService {
     constructor(LanchoneteModel) {
         this.lanchoneteModel = LanchoneteModel;
     }
 
-    async createLanchonete(nome, cnpj, idEndereco) {
+    async createLanchonete(nome, cnpj, cep, logradouro, numero, bairro, cidade, estado) {
         try {
-            const lanchonete = await this.lanchoneteModel.create({nome: nome, cnpj: cnpj, idEndereco: idEndereco})
-            return lanchonete
-        } catch (error) {
+            return await sequelize.transaction(async (t) => {
+                const endereco = await EnderecoModel.create(
+                    { cep, logradouro, numero, bairro, cidade, estado },
+                    { transaction: t }
+                );
 
+                const lanchonete = await this.lanchoneteModel.create(
+                    { nome, cnpj, idEndereco: endereco.idEndereco },
+                    { transaction: t }
+                );
+
+                return { lanchonete, endereco };
+            });
+        } catch (error) {
+            throw error;
         }
     }
 
     async selectLanchonetes() {
         try {
-            const lanchonetes = await this.lanchoneteModel.findAll()
+            const lanchonetes = await this.lanchoneteModel.findAll({
+                attributes: ['id', 'nome'],
+                include: [
+                    {
+                        model: EnderecoModel,
+                        as: 'endereco',
+                        attributes: ['cep', 'logradouro', 'numero', 'bairro', 'cidade', 'estado'],
+                    },
+                ],
+            })
 
-            return lanchonetes;
+            const lanchonetesFormatadas = lanchonetes.map((lanchonete) => {
+                const endereco = lanchonete.endereco;
+                const enderecoFormatado = `${endereco.logradouro}, ${endereco.numero} - ${endereco.bairro}, ${endereco.cidade}`;
+
+                // Retorna um objeto com os atributos desejados
+                return {
+                    id: lanchonete.id,
+                    nome: lanchonete.nome,
+                    endereco: enderecoFormatado,
+                };
+            });
+
+            return lanchonetesFormatadas;
         } catch (error) {
             console.error("Erro ao buscar lanchonetes:", error);
             throw error;
