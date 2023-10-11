@@ -2,12 +2,12 @@ const { DataTypes } = require('sequelize')
 const sequelize = require('../config/db')
 
 const UserModel = sequelize.define('User', {
-    id: {
+    idUsuario: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    nome: {
+    nomeUsuario: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {

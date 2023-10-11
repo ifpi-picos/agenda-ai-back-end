@@ -9,11 +9,11 @@ const lanchoneteService = new LanchoneteService(LanchoneteModel);
 const enderecoService = new EnderecoService(EnderecoModel)
 
 router.post('/criar', async (req, res) => {
-  const { nome, cnpj, cep, logradouro, numero, bairro, cidade, estado } = req.body
+  const { nomeUsuario, email, password, nomeLanchonete, cnpj, cep, logradouro, numero, bairro, cidade, estado } = req.body
   try {
-    const result = await lanchoneteService.createLanchonete(nome, cnpj, cep, logradouro, numero, bairro, cidade, estado);
+    const result = await lanchoneteService.createLanchonete(nomeUsuario, email, password, nomeLanchonete, cnpj, cep, logradouro, numero, bairro, cidade, estado);
 
-    res.status(201).json({ message: 'Lanchonete criada com sucesso', lanchonete: result.lanchonete, endereco: result.endereco });
+    res.status(201).json({ message: 'Lanchonete criada com sucesso', lanchonete: result.lanchonete, endereco: result.endereco, user: result.user });
   } catch (error) {
     res.status(500).json({ error: 'Erro ao criar a lanchonete', message: error.message });
   }

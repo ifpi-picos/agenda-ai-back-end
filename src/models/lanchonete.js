@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../config/db');
 const EnderecoModel = require('./endereco');
+const UserModel = require('./user');
 
 
 const LanchoneteModel = sequelize.define('Lanchonete', {
@@ -9,7 +10,7 @@ const LanchoneteModel = sequelize.define('Lanchonete', {
         primaryKey: true,
         autoIncrement: true,
       },
-    nome: {
+    nomeLanchonete: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -24,15 +25,18 @@ const LanchoneteModel = sequelize.define('Lanchonete', {
             notEmpty: true
         }
     },
+    idUsuario: {
+        type: DataTypes.INTEGER
+    },
     idEndereco: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
+        type: DataTypes.INTEGER
       },
 }, {
     tableName: 'lanchonetes'
 })
 
 LanchoneteModel.belongsTo(EnderecoModel, { foreignKey: 'idEndereco', as: 'endereco' })
+UserModel.belongsTo(UserModel, { foreignKey: 'idUsuario', as: 'user' })
 
 async function verificarECriarTabela() {
     try {
@@ -43,6 +47,6 @@ async function verificarECriarTabela() {
     }
 }
 
-verificarECriarTabela();
+//verificarECriarTabela();
 
 module.exports = LanchoneteModel

@@ -1,25 +1,33 @@
 const EnderecoModel = require("../models/endereco");
 const sequelize = require('../config/db')
 
+const AuthService = require('../services/auth')
+const UserModel = require('../models/user')
+
+const authService = new AuthService(UserModel)
 class LanchoneteService {
     constructor(LanchoneteModel) {
         this.lanchoneteModel = LanchoneteModel;
     }
 
-    async createLanchonete(nome, cnpj, cep, logradouro, numero, bairro, cidade, estado) {
+    async createLanchonete(nomeUsuario, email, password, nomeLanchonete, cnpj, cep, logradouro, numero, bairro, cidade, estado) {
+        const tipo = 'gerente'
         try {
             return await sequelize.transaction(async (t) => {
+                const user = await authService.signUp(
+                    {nomeUsuario, email, password, tipo}
+                )
                 const endereco = await EnderecoModel.create(
                     { cep, logradouro, numero, bairro, cidade, estado },
                     { transaction: t }
                 );
 
                 const lanchonete = await this.lanchoneteModel.create(
-                    { nome, cnpj, idEndereco: endereco.idEndereco },
+                    { nomeLanchonete, cnpj, idUsuario: user.idUsuario, idEndereco: endereco.idEndereco },
                     { transaction: t }
                 );
 
-                return { lanchonete, endereco };
+                return { lanchonete, endereco, user };
             });
         } catch (error) {
             throw error;
