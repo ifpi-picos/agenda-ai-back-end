@@ -37,7 +37,7 @@ class LanchoneteService {
     async selectLanchonetes() {
         try {
             const lanchonetes = await this.lanchoneteModel.findAll({
-                attributes: ['id', 'nome'],
+                attributes: ['id', 'nomeLanchonete'],
                 include: [
                     {
                         model: EnderecoModel,
@@ -54,7 +54,7 @@ class LanchoneteService {
                 // Retorna um objeto com os atributos desejados
                 return {
                     id: lanchonete.id,
-                    nome: lanchonete.nome,
+                    nomeLanchonete: lanchonete.nomeLanchonete,
                     endereco: enderecoFormatado,
                 };
             });
