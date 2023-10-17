@@ -68,7 +68,15 @@ class LanchoneteService {
 
     async buscaLanchonete(lanchoneteId) {
         try {
-            const lanchonete = await this.lanchoneteModel.findByPk(lanchoneteId)
+            const lanchonete = await this.lanchoneteModel.findByPk(lanchoneteId, {
+                include: [
+                    {
+                        model: EnderecoModel,
+                        as: 'endereco',
+                        attributes: ['cep', 'logradouro', 'numero', 'bairro', 'cidade', 'estado'],
+                    },
+                ],
+            })
 
             /*if(!lanchonete) {
                 console.log('lanchonete não encontrada')
@@ -82,6 +90,27 @@ class LanchoneteService {
         }
     }
 
+    async alterarLanchonete(lanchoneteId, nomeLanchonete, cnpj, cep, logradouro, numero, bairro, cidade, estado) {
+        try {
+            const lanchonete = await this.buscaLanchonete(lanchoneteId)
+
+            lanchonete.nomeLanchonete = nomeLanchonete
+            lanchonete.cnpj = cnpj
+            lanchonete.endereco.cep = cep
+            lanchonete.endereco.logradouro = logradouro
+            lanchonete.endereco.numero = numero
+            lanchonete.endereco.bairro = bairro
+            lanchonete.endereco.cidade = cidade
+            lanchonete.endereco.estado = estado
+
+            await lanchonete.save()
+    
+            return lanchonete;
+        } catch (error) {
+          console.error("Erro ao atualizar lanchonete:", error);
+          throw error;
+        }
+      }
     async deleteLanchonete(lanchoneteId) {
         try {
             const deletarLanchonete = await this.lanchoneteModel.destroy({

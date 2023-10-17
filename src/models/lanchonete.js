@@ -36,7 +36,7 @@ const LanchoneteModel = sequelize.define('Lanchonete', {
 })
 
 LanchoneteModel.belongsTo(EnderecoModel, { foreignKey: 'idEndereco', as: 'endereco' })
-UserModel.belongsTo(UserModel, { foreignKey: 'idUsuario', as: 'user' })
+LanchoneteModel.belongsTo(UserModel, { foreignKey: 'idUsuario', as: 'user' })
 
 async function verificarECriarTabela() {
     try {
