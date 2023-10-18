@@ -1,10 +1,12 @@
-/*const express = require('express')
+const express = require('express')
 const router = express.Router()
 
+const lanchoneteRoutes = require('./lanchonetes');
 const authRoutes = require('./auth')
-const LanchonetesRoutes = require('./lanchonetes')
+const lancheRoutes = require('./lanches')
 
+router.use('/lanchonetes', lanchoneteRoutes);
 router.use('/auth', authRoutes)
-router.use('/lanchonetes', LanchonetesRoutes)
+router.use('/lanche', lancheRoutes)
 
-module.exports = router*/
+module.exports = router
