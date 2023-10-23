@@ -5,7 +5,7 @@ const swaggerUi = require("swagger-ui-express")
 const swaggerDocs = require("./swagger.json")
 const cors = require('cors')
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3001
 const routes = require('./routes')
 
 const corsOptions = {
@@ -19,8 +19,8 @@ app.use(express.json())
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 app.use('/', routes)
 
-app.listen(PORT , () => {
+const server = app.listen(PORT , () => {
     console.log(`App rodando na porta ${PORT}`)
 })
 
-//vercel
+module.exports = server

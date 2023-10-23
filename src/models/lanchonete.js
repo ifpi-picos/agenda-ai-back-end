@@ -9,7 +9,7 @@ const LanchoneteModel = sequelize.define('Lanchonete', {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-      },
+    },
     nomeLanchonete: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -30,13 +30,17 @@ const LanchoneteModel = sequelize.define('Lanchonete', {
     },
     idEndereco: {
         type: DataTypes.INTEGER
-      },
+    },
+    idHorario: {
+        type: DataTypes.INTEGER
+    }
 }, {
     tableName: 'lanchonetes'
 })
 
 LanchoneteModel.belongsTo(EnderecoModel, { foreignKey: 'idEndereco', as: 'endereco' })
 LanchoneteModel.belongsTo(UserModel, { foreignKey: 'idUsuario', as: 'user' })
+LanchoneteModel.belongsTo(UserModel, { foreignKey: 'idHorario', as: 'horarioFuncionamento' })
 
 async function verificarECriarTabela() {
     try {

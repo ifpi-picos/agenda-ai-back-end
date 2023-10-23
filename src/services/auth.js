@@ -10,7 +10,7 @@ class AuthService {
             user.password = bcrypt.hashSync(user.password, 10)
             return await this.userModel.create(user)
         } catch (error) {
-
+            throw error
         }
     }
 

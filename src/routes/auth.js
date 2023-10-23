@@ -8,14 +8,14 @@ const authService = new AuthService(UserModel)
 
 router.post('/signup', async (req, res) => {
     try {
-        const { nome, email, password, tipo } = req.body
+        const { nomeUsuario, email, password, tipo } = req.body
         if (password.length < 6) {
             return res.status(400).json({ error: "A senha deve ter pelo menos 6 caracteres" })
         }
-        if (!nome) {
+        if (!nomeUsuario) {
             return res.status(400).json({error: "Nome de usuário ausente"})
         }
-        await authService.signUp({nome, email, password, tipo})
+        await authService.signUp({nomeUsuario, email, password, tipo})
         res.status(201).json({message: "Usuário cadastrado com sucesso"})
     } catch (error) {
         res.status(500).json({ error: 'Erro ao cadastrar usuário', message: error.message });
