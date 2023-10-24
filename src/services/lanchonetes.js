@@ -1,5 +1,6 @@
 const EnderecoModel = require("../models/endereco");
 const sequelize = require('../config/db')
+const bcrypt = require('bcrypt')
 
 const AuthService = require('../services/auth')
 const UserModel = require('../models/user')
@@ -14,8 +15,10 @@ class LanchoneteService {
         const tipo = 'gerente'
         try {
             return await sequelize.transaction(async (t) => {
-                const user = await authService.signUp(
-                    {nomeUsuario, email, password, tipo}
+                password = bcrypt.hashSync(password, 10)
+                const user = await UserModel.create(
+                    {nomeUsuario, email, password, tipo},
+                    { transaction: t}
                 )
                 const endereco = await EnderecoModel.create(
                     { cep, logradouro, numero, bairro, cidade, estado },
@@ -78,10 +81,10 @@ class LanchoneteService {
                 ],
             })
 
-            /*if(!lanchonete) {
+            if(!lanchonete) {
                 console.log('lanchonete não encontrada')
                 return
-            }*/
+            }
 
             return lanchonete;
         } catch (error) {

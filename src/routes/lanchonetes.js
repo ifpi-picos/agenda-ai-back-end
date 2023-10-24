@@ -34,6 +34,9 @@ router.get('/buscar/:id', async (req, res) => {
   try {
     const lanchonetes = await lanchoneteService.buscaLanchonete(lanchoneteId);
     //const lanchonetes = await LanchoneteModel.findAll();
+    if(!lanchonetes) {
+      return res.status(404).json({error: 'Lanchonete não encontrada'})
+    }
     res.status(200).json(lanchonetes);
   } catch (error) {
     res.status(500).json({ error: 'Erro ao buscar lanchonete', message: error.message });

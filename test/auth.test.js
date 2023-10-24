@@ -1,7 +1,7 @@
 const request = require('supertest')
 const app =  require('../src/index')
 
-afterAll((done) => {
+afterEach((done) => {
     app.close();
     done();
   });
@@ -13,10 +13,10 @@ describe('Teste para rotas de autenticação', () => {
             .post('/auth/signup')
             .send({
                 nomeUsuario: 'Zé Exemplo',
-                email: 'zexemplo@gmail.com',
+                email: 'zexemplo356fgd2@gmail.com',
                 password: '123456',
                 tipo: 'cliente'
-            })
+           })
         expect(response.statusCode).toBe(201)
         expect(response.body.message).toBe('Usuário cadastrado com sucesso')
     })
@@ -24,7 +24,7 @@ describe('Teste para rotas de autenticação', () => {
         const response = await request(app)
           .post('/auth/signin')
           .send({
-            email: 'zexemsfcplo@gmail.com',
+            email: 'zegerente@gmail.com',
             password: '123456',
           });
     
@@ -32,7 +32,3 @@ describe('Teste para rotas de autenticação', () => {
         expect(response.body.token).toBeDefined();
       });
 })
-
-
-
-
