@@ -50,13 +50,13 @@ LancheModel.belongsTo(LanchoneteModel, {foreignKey: 'idLanchonete', as: 'lanchon
 
 async function verificarECriarTabela() {
     try {
-        await sequelize.sync({ force: false }); // force: false evita a recriação da tabela se ela já existir
+        await sequelize.sync({ force: false });
         //console.log('Tabela "lanche" verificada e, se necessário, criada com sucesso.');
     } catch (error) {
         console.error('Erro ao verificar/criar a tabela "lanche":', error);
     }
 }
 
-//verificarECriarTabela();
+verificarECriarTabela();
 
 module.exports = LancheModel

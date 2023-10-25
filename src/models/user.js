@@ -45,10 +45,10 @@ async function verificarECriarTabela() {
         await sequelize.sync({ force: false }); // force: false evita a recriação da tabela se ela já existir
         console.log('Tabela "users" verificada e, se necessário, criada com sucesso.');
     } catch (error) {
-        console.error('Erro ao verificar/criar a tabela "lanchonetes":', error);
+        console.error('Erro ao verificar/criar a tabela "users":', error);
     }
 }
 
-//verificarECriarTabela();
+verificarECriarTabela();
 
 module.exports = UserModel

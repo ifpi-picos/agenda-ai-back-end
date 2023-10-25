@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize')
 const sequelize = require('../config/db');
 const EnderecoModel = require('./endereco');
 const UserModel = require('./user');
+const HorarioFuncionamentoModel = require('./horarioFuncionamento');
 
 
 const LanchoneteModel = sequelize.define('Lanchonete', {
@@ -30,27 +31,25 @@ const LanchoneteModel = sequelize.define('Lanchonete', {
     },
     idEndereco: {
         type: DataTypes.INTEGER
-    },/*
-    idHorario: {
-        type: DataTypes.INTEGER
-    }*/
+    },
 }, {
     tableName: 'lanchonetes'
 })
 
 LanchoneteModel.belongsTo(EnderecoModel, { foreignKey: 'idEndereco', as: 'endereco' })
 LanchoneteModel.belongsTo(UserModel, { foreignKey: 'idUsuario', as: 'user' })
-//LanchoneteModel.belongsTo(UserModel, { foreignKey: 'idHorario', as: 'horarioFuncionamento' })
+LanchoneteModel.hasMany(HorarioFuncionamentoModel, { foreignKey: 'lanchoneteId', as: 'horariosFuncionamento' });
+
 
 async function verificarECriarTabela() {
     try {
-        await sequelize.sync({ force: false }); // force: false evita a recriação da tabela se ela já existir
+        await sequelize.sync({ force: false });
         console.log('Tabela "lanchonetes" verificada e, se necessário, criada com sucesso.');
     } catch (error) {
         console.error('Erro ao verificar/criar a tabela "lanchonetes":', error);
     }
 }
 
-//verificarECriarTabela();
+verificarECriarTabela();
 
 module.exports = LanchoneteModel

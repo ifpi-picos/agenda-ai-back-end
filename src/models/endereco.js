@@ -55,14 +55,14 @@ const EnderecoModel = sequelize.define('Endereco', {
 
 async function verificarECriarTabela() {
     try {
-        await sequelize.sync({ force: false }); // force: false evita a recriação da tabela se ela já existir
+        await sequelize.sync({ force: false });
         console.log('Tabela "endereco" verificada e, se necessário, criada com sucesso.');
     } catch (error) {
-        console.error('Erro ao verificar/criar a tabela "lanchonetes":', error);
+        console.error('Erro ao verificar/criar a tabela "endereco":', error);
     }
 }
 
-//verificarECriarTabela();
+verificarECriarTabela();
 
 
 module.exports = EnderecoModel

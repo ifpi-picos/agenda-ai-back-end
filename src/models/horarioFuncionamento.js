@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const HorarioFuncionamentoModel = sequelize.define('HorarioFuncionamento', {
@@ -9,7 +9,7 @@ const HorarioFuncionamentoModel = sequelize.define('HorarioFuncionamento', {
     },
     diaSemana: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false, 
         validate: {
             notEmpty: true
         }
@@ -27,12 +27,17 @@ const HorarioFuncionamentoModel = sequelize.define('HorarioFuncionamento', {
         validate: {
             notEmpty: true
         }
-    }
+    },
+    lanchoneteId: {
+        type: DataTypes.INTEGER,
+    },
+}, {
+    tableName: 'horariosFuncionamento'
 });
 
 async function verificarECriarTabela() {
     try {
-        await sequelize.sync({ force: false }); // force: false evita a recriação da tabela se ela já existir
+        await sequelize.sync({ force: false });
         console.log('Tabela "horarioFuncionamento" verificada e, se necessário, criada com sucesso.');
     } catch (error) {
         console.error('Erro ao verificar/criar a tabela "horarioFuncionamento":', error);
@@ -41,5 +46,5 @@ async function verificarECriarTabela() {
 
 verificarECriarTabela();
 
+module.exports = HorarioFuncionamentoModel;
 
-module.exports = HorarioFuncionamentoModel
