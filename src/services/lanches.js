@@ -51,6 +51,18 @@ class LancheService {
             throw error
         }
     }
+
+    async listarLanchesDeLanchonete(idLanchonete) {
+        try {
+            const lanches = await this.lancheModel.findAll({
+                where: { idLanchonete: idLanchonete},
+            })
+            return lanches
+        } catch (error) {
+            console.error("Erro ao buscar lanches", error)
+            throw error
+        }
+    }
 }
 
 module.exports = LancheService

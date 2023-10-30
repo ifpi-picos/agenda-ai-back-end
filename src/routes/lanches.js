@@ -24,6 +24,24 @@ router.post('/adicionarLanche', async (req, res) => {
     }
 })
 
+router.get('/:id/listarLanches', async (req, res) => {
+    const idLanchonete = req.params.id
+    console.log(`ID da lanchonete: ${idLanchonete}`);
+    try {
+        const lanchonete = await lanchoneteService.buscaLanchonete(idLanchonete)
+        if (!lanchonete) {
+            return res.status(404).json({ error: "Id de lanchonete não encontrado"})
+        }
+        const lanches = await lancheService.listarLanchesDeLanchonete(idLanchonete)
+        if(!lanches) {
+            return res.status(404).json({error: 'Lanches não encontrados'})
+        }
+        res.status(200).json(lanches)
+    } catch (error) {
+        res.status(500).json({error: 'Erro ao listar lanches', message: error.message })
+    }
+})
+
 router.get('/buscar/:id', async (req, res) => {
     const idLanche = req.params.id
     try {

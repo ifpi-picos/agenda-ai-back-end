@@ -46,7 +46,7 @@ const LancheModel =  sequelize.define('Lanche', {
     tableName: 'lanches'
 })
 
-LancheModel.belongsTo(LanchoneteModel, {foreignKey: 'idLanchonete', as: 'lanchonete'})
+LancheModel.belongsTo(LanchoneteModel, {foreignKey: 'idLanchonete', as: 'lanchonetes'})
 
 async function verificarECriarTabela() {
     try {
