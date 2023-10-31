@@ -20,7 +20,7 @@ const ItensCardapioModel = sequelize.define('ItemCardapio', {
 })
 
 ItensCardapioModel.belongsTo(CardapioModel, {foreignKey: 'idCardapio', as: 'cardapios'})
-ItensCardapioModel.belongsTo(LancheModel, {foreignKey: 'idLanche', as: lanches})
+ItensCardapioModel.belongsTo(LancheModel, {foreignKey: 'idLanche', as: 'lanches'})
 
 async function verificarECriarTabela() {
     try {

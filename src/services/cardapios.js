@@ -1,3 +1,5 @@
+const CardapioModel = require("../models/cardapio");
+
 class CardapioService {
     constructor(CardapioModel) {
         this.cardapioModel = CardapioModel;
@@ -7,8 +9,14 @@ class CardapioService {
         console.log(dia, idLanchonete)
         try {
             const cardapio = await this.cardapioModel.create({dia, idLanchonete})
-            
-    console.log(cardapio)
+            return cardapio
+        } catch (error) {
+            throw error
+        }
+    }
+    async buscaCardapio(idCardapio) {
+        try {
+            const cardapio = this.cardapioModel.findByPk(idCardapio)
             return cardapio
         } catch (error) {
             throw error
