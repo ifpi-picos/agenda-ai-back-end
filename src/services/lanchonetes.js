@@ -93,6 +93,23 @@ class LanchoneteService {
         }
     }
 
+    async buscaIdLanchonete(idUsuario) {
+        try {
+            const lanchonete = await this.lanchoneteModel.findOne({
+                where: {
+                    idUsuario: idUsuario
+                }
+            })
+            if (lanchonete) {
+                return lanchonete.id
+            } else {
+                return null
+            }
+        } catch (error) {
+            
+        }
+    }
+
     async alterarLanchonete(lanchoneteId, nomeLanchonete, cnpj, cep, logradouro, numero, bairro, cidade, estado) {
         try {
             const lanchonete = await this.buscaLanchonete(lanchoneteId)
