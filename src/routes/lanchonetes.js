@@ -9,9 +9,9 @@ const lanchoneteService = new LanchoneteService(LanchoneteModel);
 const enderecoService = new EnderecoService(EnderecoModel)
 
 router.post('/criar', async (req, res) => {
-  const { nomeUsuario, email, password, nomeLanchonete, cnpj, cep, logradouro, numero, bairro, cidade, estado } = req.body
+  const { nomeUsuario, email, password, nomeLanchonete, cnpj, imagem, cep, logradouro, numero, bairro, cidade, estado } = req.body
   try {
-    const result = await lanchoneteService.createLanchonete(nomeUsuario, email, password, nomeLanchonete, cnpj, cep, logradouro, numero, bairro, cidade, estado);
+    const result = await lanchoneteService.createLanchonete(nomeUsuario, email, password, nomeLanchonete, cnpj, imagem, cep, logradouro, numero, bairro, cidade, estado);
 
     res.status(201).json({ message: 'Lanchonete criada com sucesso', lanchonete: result.lanchonete, endereco: result.endereco, user: result.user });
   } catch (error) {
@@ -45,7 +45,7 @@ router.get('/buscar/:id', async (req, res) => {
 
 router.put('/alterar/:id', async (req, res) => {
   const lanchoneteId = req.params.id
-  const { nomeLanchonete, cnpj, cep, logradouro, numero, bairro, cidade, estado } = req.body;
+  const { nomeLanchonete, cnpj, imagem, cep, logradouro, numero, bairro, cidade, estado } = req.body;
 
   try {
     const lanchonete = await lanchoneteService.buscaLanchonete(lanchoneteId)
@@ -56,6 +56,7 @@ router.put('/alterar/:id', async (req, res) => {
       lanchoneteId,
       nomeLanchonete,
       cnpj,
+      imagem,
       cep,
       logradouro,
       numero,

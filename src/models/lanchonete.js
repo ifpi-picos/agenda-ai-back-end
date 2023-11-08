@@ -26,6 +26,9 @@ const LanchoneteModel = sequelize.define('Lanchonete', {
             notEmpty: true
         }
     },
+    imagem: {
+        type: DataTypes.STRING
+    },
     idUsuario: {
         type: DataTypes.INTEGER
     },
@@ -43,7 +46,7 @@ LanchoneteModel.hasMany(HorarioFuncionamentoModel, { foreignKey: 'lanchoneteId',
 
 async function verificarECriarTabela() {
     try {
-        await sequelize.sync({ force: false });
+        await sequelize.sync({ force: false, alter: true });
         console.log('Tabela "lanchonetes" verificada e, se necessário, criada com sucesso.');
     } catch (error) {
         console.error('Erro ao verificar/criar a tabela "lanchonetes":', error);

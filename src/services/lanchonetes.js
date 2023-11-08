@@ -11,7 +11,7 @@ class LanchoneteService {
         this.lanchoneteModel = LanchoneteModel;
     }
 
-    async createLanchonete(nomeUsuario, email, password, nomeLanchonete, cnpj, cep, logradouro, numero, bairro, cidade, estado) {
+    async createLanchonete(nomeUsuario, email, password, nomeLanchonete, cnpj, imagem, cep, logradouro, numero, bairro, cidade, estado) {
         const tipo = 'gerente'
         try {
             return await sequelize.transaction(async (t) => {
@@ -26,7 +26,7 @@ class LanchoneteService {
                 );
 
                 const lanchonete = await this.lanchoneteModel.create(
-                    { nomeLanchonete, cnpj, idUsuario: user.idUsuario, idEndereco: endereco.idEndereco },
+                    { nomeLanchonete, cnpj, imagem, idUsuario: user.idUsuario, idEndereco: endereco.idEndereco },
                     { transaction: t }
                 );
 
@@ -110,12 +110,13 @@ class LanchoneteService {
         }
     }
 
-    async alterarLanchonete(lanchoneteId, nomeLanchonete, cnpj, cep, logradouro, numero, bairro, cidade, estado) {
+    async alterarLanchonete(lanchoneteId, nomeLanchonete, cnpj, imagem, cep, logradouro, numero, bairro, cidade, estado) {
         try {
             const lanchonete = await this.buscaLanchonete(lanchoneteId)
 
             lanchonete.nomeLanchonete = nomeLanchonete
             lanchonete.cnpj = cnpj
+            lanchonete.imagem = imagem
             lanchonete.endereco.cep = cep
             lanchonete.endereco.logradouro = logradouro
             lanchonete.endereco.numero = numero
