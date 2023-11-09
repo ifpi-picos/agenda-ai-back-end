@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize')
 const sequelize =  require('../config/db')
 const LancheModel = require('./lanche')
+const LanchoneteModel = require('./lanchonete')
 
 const CardapioModel = sequelize.define('Cardapio', {
     idCardapio: {
@@ -22,7 +23,7 @@ const CardapioModel = sequelize.define('Cardapio', {
     tableName: 'cardapios'
 })
 
-CardapioModel.belongsTo(LancheModel, {foreignKey: 'idLanchonete', as: 'lanchonetes'})
+CardapioModel.belongsTo(LanchoneteModel, {foreignKey: 'idLanchonete', as: 'lanchonetes'})
 
 async function verificarECriarTabela() {
     try {
