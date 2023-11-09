@@ -24,8 +24,8 @@ router.post('/adicionarLanche', async (req, res) => {
     }
 })
 
-router.get('/:id/listarLanches', async (req, res) => {
-    const idLanchonete = req.params.id
+router.get('/:idLanchonete/listarLanches', async (req, res) => {
+    const idLanchonete = req.params.idLanchonete
     console.log(`ID da lanchonete: ${idLanchonete}`);
     try {
         const lanchonete = await lanchoneteService.buscaLanchonete(idLanchonete)
