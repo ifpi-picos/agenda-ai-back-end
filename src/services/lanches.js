@@ -56,6 +56,7 @@ class LancheService {
         try {
             const lanches = await this.lancheModel.findAll({
                 where: { idLanchonete: idLanchonete},
+                order: [['tipo', 'ASC']],
             })
             return lanches
         } catch (error) {
