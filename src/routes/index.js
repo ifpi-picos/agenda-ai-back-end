@@ -8,10 +8,9 @@ const horarioRoutes = require('./horarioFuncionamento')
 const cardapioRoutes = require('./cardapios')
 const itensCardapioRoutes = require('./itensCardapio')
 
-router.use('/lanchonetes', lanchoneteRoutes);
+router.use('/lanchonetes', lanchoneteRoutes, horarioRoutes);
 router.use('/auth', authRoutes)
 router.use('/lanche', lancheRoutes)
-router.use('/horario', horarioRoutes)
 router.use('/cardapio', cardapioRoutes, itensCardapioRoutes)
 
 

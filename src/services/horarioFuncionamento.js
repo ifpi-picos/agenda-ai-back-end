@@ -12,7 +12,19 @@ class HorarioFuncionamentoService {
         }
     }
 
-    
+    async buscarHorariosDoDia(lanchoneteId, diaSemana) {
+        try {
+            const horarios = await this.horarioFuncionamentoModel.findAll({
+                where: {
+                    lanchoneteId: lanchoneteId,
+                    diaSemana: diaSemana
+                }
+            })
+            return horarios
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 module.exports = HorarioFuncionamentoService
