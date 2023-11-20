@@ -5,12 +5,12 @@ class AuthService {
     constructor(UserModel) {
         this.userModel = UserModel
     }
-    async signUp(user) {
+    async signUp(nomeUsuario, email, password, tipo) {
         try {
-            user.password = bcrypt.hashSync(user.password, 10)
-            return await this.userModel.create(user)
+            password = bcrypt.hashSync(password, 10);
+            return await this.userModel.create({ nomeUsuario, email, password, tipo });
         } catch (error) {
-            throw error
+            throw error;
         }
     }
 
