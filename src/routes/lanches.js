@@ -4,12 +4,13 @@ const LancheModel = require('../models/lanche')
 const LancheService = require('../services/lanches')
 const LanchoneteModel = require('../models/lanchonete')
 const LanchoneteService = require('../services/lanchonetes');
+const verificarToken = require('../middleware/verificarToken');
 
 const lanchoneteService = new LanchoneteService(LanchoneteModel);
 
 const lancheService = new LancheService(LancheModel)
 
-router.post('/adicionarLanche', async (req, res) => {
+router.post('/adicionarLanche', verificarToken('gerente'), async (req, res) => {
     const { nomeLanche, descricao, preco, tipo, urlImagem, idLanchonete } = req.body
     try {
         const lanchonete = await lanchoneteService.buscaLanchonete(idLanchonete)
@@ -55,7 +56,7 @@ router.get('/buscar/:id', async (req, res) => {
     }
 })
 
-router.put('/alterar/:id', async (req, res) => {
+router.put('/alterar/:id', verificarToken('gerente'), async (req, res) => {
     const idLanche = req.params.id
     const { nomeLanche, descricao, preco, tipo, urlImagem } = req.body
 
@@ -78,7 +79,7 @@ router.put('/alterar/:id', async (req, res) => {
     }
 })
 
-router.delete('/deletar/:id', async (req, res) => {
+router.delete('/deletar/:id', verificarToken('gerente'), async (req, res) => {
     const idLanche = req.params.id
     try {
         const lanche = await lancheService.buscaLanche(idLanche)

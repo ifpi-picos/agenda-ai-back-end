@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const verificarToken = require('../middleware/verificarToken');
+
 const LanchoneteModel = require('../models/lanchonete')
 const LanchoneteService = require('../services/lanchonetes');
 const EnderecoModel = require('../models/endereco')
@@ -43,7 +45,7 @@ router.get('/buscar/:id', async (req, res) => {
   }
 });
 
-router.put('/alterar/:id', async (req, res) => {
+router.put('/alterar/:id', verificarToken('gerente'), async (req, res) => {
   const lanchoneteId = req.params.id
   const { nomeLanchonete, cnpj, imagem, cep, logradouro, numero, bairro, cidade, estado } = req.body;
 
@@ -70,7 +72,7 @@ router.put('/alterar/:id', async (req, res) => {
   }
 })
 
-router.delete('/deletar/:id', async (req, res) => {
+router.delete('/deletar/:id', verificarToken('gerente'), async (req, res) => {
   const lanchoneteId = req.params.id
   try {
     const lanchonete = await lanchoneteService.buscaLanchonete(lanchoneteId)
