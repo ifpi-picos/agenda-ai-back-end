@@ -29,7 +29,7 @@ class AuthService {
                 console.log('null')
                 throw new Error('Email ou senha inválido!')
             }
-            const token = jwt.sign({id: user.id, tipo: user.tipo}, process.env.SECRET_KEY, {expiresIn: '1h'})
+            const token = jwt.sign({id: user.idUsuario, tipo: user.tipo}, process.env.SECRET_KEY, {expiresIn: '1h'})
             return { token, tipo: user.tipo, idUsuario: user.idUsuario }
         } catch (error) {
             throw error
