@@ -36,14 +36,27 @@ router.get('/buscar/:id', async (req, res) => {
   try {
     const lanchonetes = await lanchoneteService.buscaLanchonete(lanchoneteId);
     //const lanchonetes = await LanchoneteModel.findAll();
-    if(!lanchonetes) {
-      return res.status(404).json({error: 'Lanchonete não encontrada'})
+    if (!lanchonetes) {
+      return res.status(404).json({ error: 'Lanchonete não encontrada' })
     }
     res.status(200).json(lanchonetes);
   } catch (error) {
     res.status(500).json({ error: 'Erro ao buscar lanchonete', message: error.message });
   }
 });
+
+router.get('/buscarIdLanchonete/:idUsuario', async (req, res) => {
+  const idUsuario = req.params.idUsuario
+  try {
+    const idLanchonete = await lanchoneteService.buscaIdLanchonete(idUsuario)
+    if (!idLanchonete) {
+      return res.status(404).json({ error: 'Lanchonete não encontrada' })
+    }
+    res.status(200).json(idLanchonete)
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar lanchonete', message: error.message });
+  }
+})
 
 router.put('/alterar/:id', verificarToken('gerente'), async (req, res) => {
   const lanchoneteId = req.params.id
@@ -65,7 +78,7 @@ router.put('/alterar/:id', verificarToken('gerente'), async (req, res) => {
       bairro,
       cidade,
       estado)
-    res.status(200).json({message: 'Lanchonete alterada com sucesso', lanchoneteAtualizada})
+    res.status(200).json({ message: 'Lanchonete alterada com sucesso', lanchoneteAtualizada })
   } catch (error) {
     console.error('Erro ao alterar lanchonete', error);
     res.status(500).json({ error: 'Erro interno do servidor', message: error.message });
