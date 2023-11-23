@@ -8,11 +8,11 @@ const cors = require('cors')
 const PORT = process.env.PORT || 3001
 const routes = require('./routes')
 
-const corsOptions = {
-    origin: process.env.LOCAL_CLIENTE_URL || "https://agenda-ai-front-end.vercel.app"
-  };
+/*const corsOptions = {
+    origin: "https://agenda-ai-front-end.vercel.app"
+  };*/
   
-  app.use(cors(corsOptions));
+  app.use(cors());
 
 app.use(express.json())
 
