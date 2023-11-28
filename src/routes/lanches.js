@@ -59,6 +59,10 @@ router.get('/buscar/:id', async (req, res) => {
 router.put('/alterar/:id', verificarToken('gerente'), async (req, res) => {
     const idLanche = req.params.id
     const { nomeLanche, descricao, preco, tipo, urlImagem } = req.body
+    const precoRegex = /^\d+(\.\d{1,2})?$/;
+    if (!precoRegex.test(preco)) {
+        return res.status(400).json({ error: 'Formato de preço inválido. Use x.xx.' });
+    }
 
     try {
         const lanche = await lancheService.buscaLanche(idLanche)
