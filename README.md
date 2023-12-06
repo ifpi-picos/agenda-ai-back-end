@@ -20,16 +20,17 @@ npm install
 ``` bash
 npm run dev
 ```
-#### 5. Acessar api: [http://localhost:3000/](http://localhost:3000/)
+#### 5. Acessar api (local): [http://localhost:3001/](http://localhost:3001/)
 
-#### Para acessar a documentação: [http://localhost:3000/api-docs](http://localhost:3000/api-docs/)
+#### Para acessar a documentação: [api-agendaai/api-docs](https://api-agendaai.vercel.app/api-docs/)
 
 ## Tecnologias utilizadas
   - JavaScript
   - Node.js
   - Express
   - Supabase
-  - Railway
+
+#### Repositório front-end: [https://github.com/ifpi-picos/agenda-ai-front-end](https://github.com/ifpi-picos/agenda-ai-front-end)
 
 ## Membros da equipe
   - [Carlos Michael da Silva Souza](https://github.com/Seinenk) - Front-end
