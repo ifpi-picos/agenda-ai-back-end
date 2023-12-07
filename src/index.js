@@ -7,7 +7,7 @@ const cors = require('cors')
 const routes = require('./routes')
 
 const corsOptions = {
-  origin: "https://agendaai.vercel.app"
+  origin: "https://api-agendaai.vercel.app/"
 };
 
 app.use(cors(corsOptions));
