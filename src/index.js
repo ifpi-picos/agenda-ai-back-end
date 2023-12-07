@@ -6,12 +6,11 @@ const swaggerDocs = require("./swagger.json")
 const cors = require('cors')
 const routes = require('./routes')
 
-const corsOptions = {
-  origin: "https://api-agendaai.vercel.app/"
-};
-
-app.use(cors(corsOptions));
-
+/*const corsOptions = {
+    origin: "https://agenda-ai-front-end.vercel.app"
+  };*/
+  
+  app.use(cors()); 
 
 app.use(express.json())
 
