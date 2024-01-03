@@ -1,12 +1,18 @@
 const express = require('express');
 const router = express.Router();
+
 const AuthService = require('../services/auth')
 const UserService = require('../services/users')
+
 const UserModel = require('../models/user')
+const TempUserModel = require('../models/tempUser')
 const LanchoneteModel = require('../models/lanchonete')
+
 const LanchoneteService = require('../services/lanchonetes');
 
+const TempAuthService = require('../services/authTemp')
 const authService = new AuthService(UserModel)
+const tempAuthService = new TempAuthService(TempUserModel)
 const userService = new UserService(UserModel)
 
 
@@ -31,8 +37,28 @@ router.post('/signup', async (req, res) => {
             return res.status(400).json({ error: "Nome de usuário ausente" })
         }
         console.log('chegou aqui')
-        await authService.signUp( nomeUsuario, email, password, tipo )
+        await tempAuthService.signUp(email)
+        //await authService.signUp( nomeUsuario, email, password, tipo )
+        res.status(201).json({ message: "Solicitação enviada com sucesso" })
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao cadastrar usuário', message: error.message });
+    }
+})
+
+router.post('/confirmSignup', async (req, res) => {
+    try {
+        const {cod, nomeUsuario, email, password} =  req.body
+        const tipo = 'cliente'
+        console.log(`cod: ${cod}, email: ${email}`)
+        const user = await tempAuthService.buscarUsuarioTemporario(cod)
+        console.log(user)
+        if(!user) {
+            return res.status(404).json({error: "Código de confirmação inválido"})
+        } else if (cod == user.cod && email == user.email) {
+            await authService.signUp(nomeUsuario, email, password, tipo)
+        }
         res.status(201).json({ message: "Usuário cadastrado com sucesso" })
+
     } catch (error) {
         res.status(500).json({ error: 'Erro ao cadastrar usuário', message: error.message });
     }
