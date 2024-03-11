@@ -22,6 +22,13 @@ const lanchoneteService = new LanchoneteService(LanchoneteModel);
 router.post('/signup', async (req, res) => {
     try {
         const { nomeUsuario, email, password, confirmPassword, tipo } = req.body
+
+        const tempUser = await tempAuthService.buscarUsuarioTemporarioPorEmail(email)
+
+        if (tempUser) {
+            res.status(200).json({ message: "email encontrado" })
+        }
+
         const userEmail = await userService.getUserByEmail(email)
         if (userEmail === email) {
             console.log('email cadastrado')

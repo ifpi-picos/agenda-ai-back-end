@@ -39,6 +39,20 @@ class TempAuthService {
         }
     }
 
+    async buscarUsuarioTemporarioPorEmail(email) {
+        try {
+            const user = await this.tempUserModel.findOne({
+                where: {email: email}
+            })
+            if (user) {
+                return user;
+            } else {
+                return null;
+            }
+        } catch (error) {
+        }
+    }
+
     async sendEmail(cod, userEmail) {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
