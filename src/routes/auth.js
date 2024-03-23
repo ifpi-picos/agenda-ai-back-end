@@ -26,7 +26,8 @@ router.post('/signup', async (req, res) => {
         const tempUser = await tempAuthService.buscarUsuarioTemporarioPorEmail(email)
 
         if (tempUser) {
-            res.status(200).json({ message: "email encontrado" })
+            console.log('tempUser true')
+            return res.status(200).json({ message: "email encontrado" }) // Adicionado o "return" aqui
         }
 
         const userEmail = await userService.getUserByEmail(email)
@@ -34,7 +35,7 @@ router.post('/signup', async (req, res) => {
             console.log('email cadastrado')
             return res.status(400).json({error: "Email já cadastrado"})
         }
-        if (password.length < 6) {
+        if (password.length < 6) { 
             return res.status(400).json({ error: "A senha deve ter pelo menos 6 caracteres" })
         }
         if (password != confirmPassword) {
@@ -52,8 +53,10 @@ router.post('/signup', async (req, res) => {
     }
 })
 
+
 router.post('/confirmSignup', async (req, res) => {
     try {
+        console.log('entrou na confirmação')
         const {cod, nomeUsuario, email, password} =  req.body
         const tipo = 'cliente'
         console.log(`cod: ${cod}, email: ${email}`)
