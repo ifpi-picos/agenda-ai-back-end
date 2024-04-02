@@ -17,9 +17,9 @@ class TempAuthService {
     }
     async confirmSignup(email) {
         try {
-            
+
         } catch (error) {
-            
+
         }
     }
 
@@ -35,14 +35,14 @@ class TempAuthService {
                 return null;
             }
         } catch (error) {
-            
+
         }
     }
 
     async buscarUsuarioTemporarioPorEmail(email) {
         try {
             const user = await this.tempUserModel.findOne({
-                where: {email: email}
+                where: { email: email }
             })
             if (user) {
                 return user;
@@ -61,15 +61,22 @@ class TempAuthService {
                 pass: process.env.SENHA_EMAIL
                 
             },
-            tls: {
+            /*tls: {
                 rejectUnauthorized: false, // Ignora a verificação do certificado (apenas para desenvolvimento)
-            },
+            },*/
         })
         const mailOptions = {
             from: `Agenda Aí <${process.env.EMAIL}>`,
             to: userEmail,
             subject: 'Código de confirmação de cadastro',
-            text: `Seu código é ${cod}`
+            //text: `Seu código é ${cod}`,
+            html: `
+                <div style="background-color: #f5f5f5; padding: 20px; border-radius: 10px;">
+                    <p>Olá, seu código de confirmação é </p>
+                    <p><strong>${cod}</strong>.</p>
+                    <p>Obrigado!</p>
+                </div>
+            `
         }
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
