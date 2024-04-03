@@ -7,7 +7,9 @@ const lancheRoutes = require('./lanches')
 const horarioRoutes = require('./horarioFuncionamento')
 const cardapioRoutes = require('./cardapios')
 const itensCardapioRoutes = require('./itensCardapio')
+const solicitacaoLanchonete = require('./solicitacaoLanchonete')
 
+router.use('/',solicitacaoLanchonete)
 router.use('/lanchonetes', lanchoneteRoutes, horarioRoutes);
 router.use('/auth', authRoutes)
 router.use('/lanche', lancheRoutes)
